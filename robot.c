@@ -3,7 +3,7 @@
 void setup_robot(struct Robot *robot){
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
     robot->y = OVERALL_WINDOW_HEIGHT-50;
-    robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
+    robot->true_x = 210;
     robot->true_y = OVERALL_WINDOW_HEIGHT-50;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
@@ -189,7 +189,7 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
     int robotCentreX, robotCentreY, xTR, yTR, xTL, yTL, xBR, yBR, xBL, yBL;
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
 
-    /*
+    
     //Other Display options:
     // The actual square which the robot is tested against (not so nice visually with turns, but easier
     // to test overlap
@@ -197,45 +197,45 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
     SDL_SetRenderDrawColor(renderer, 80, 80, 80, 255);
     SDL_RenderDrawRect(renderer, &rect);
     SDL_RenderFillRect(renderer, &rect);
-    */
-    /*
+    
+
     //Center Line of Robot. Line shows the direction robot is facing
     xDir = -30 * sin(-robot->angle*PI/180);
     yDir = -30 * cos(-robot->angle*PI/180);
-    xDirInt = robot->x+ROBOT_WIDTH/2+ (int) xDir;
-    yDirInt = robot->y+ROBOT_HEIGHT/2+ (int) yDir;
+    int xDirInt = robot->x+ROBOT_WIDTH/2+ (int) xDir;
+    int yDirInt = robot->y+ROBOT_HEIGHT/2+ (int) yDir;
     SDL_RenderDrawLine(renderer,robot->x+ROBOT_WIDTH/2, robot->y+ROBOT_HEIGHT/2, xDirInt, yDirInt);
-    */
+    
 
     //Rotating Square
     //Vector rotation to work out corners x2 = x1cos(angle)-y1sin(angle), y2 = x1sin(angle)+y1cos(angle)
-    robotCentreX = robot->x+ROBOT_WIDTH/2;
-    robotCentreY = robot->y+ROBOT_HEIGHT/2;
+    // robotCentreX = robot->x+ROBOT_WIDTH/2;
+    // robotCentreY = robot->y+ROBOT_HEIGHT/2;
 
-    xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
-    yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
-    xTR = (int) xDir;
-    yTR = (int) yDir;
+    // xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+    // yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
+    // xTR = (int) xDir;
+    // yTR = (int) yDir;
 
-    xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
-    yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
-    xBR = (int) xDir;
-    yBR = (int) yDir;
+    // xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+    // yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
+    // xBR = (int) xDir;
+    // yBR = (int) yDir;
 
-    xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
-    yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
-    xBL = (int) xDir;
-    yBL = (int) yDir;
+    // xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+    // yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
+    // xBL = (int) xDir;
+    // yBL = (int) yDir;
 
-    xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
-    yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
-    xTL = (int) xDir;
-    yTL = (int) yDir;
+    // xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+    // yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
+    // xTL = (int) xDir;
+    // yTL = (int) yDir;
 
-    SDL_RenderDrawLine(renderer,xTR, yTR, xBR, yBR);
-    SDL_RenderDrawLine(renderer,xBR, yBR, xBL, yBL);
-    SDL_RenderDrawLine(renderer,xBL, yBL, xTL, yTL);
-    SDL_RenderDrawLine(renderer,xTL, yTL, xTR, yTR);
+    // SDL_RenderDrawLine(renderer,xTR, yTR, xBR, yBR);
+    // SDL_RenderDrawLine(renderer,xBR, yBR, xBL, yBL);
+    // SDL_RenderDrawLine(renderer,xBL, yBL, xTL, yTL);
+    // SDL_RenderDrawLine(renderer,xTL, yTL, xTR, yTR);
 
     //Front Centre Sensor
     int sensor_sensitivity =  floor(SENSOR_VISION/5);
@@ -307,6 +307,7 @@ void robotMotorMove(struct Robot * robot, int crashed) {
                 robot->angle = (robot->angle+360-DEFAULT_ANGLE_CHANGE)%360;
                 break;
             case RIGHT :
+                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
                 robot->angle = (robot->angle+DEFAULT_ANGLE_CHANGE)%360;
                 break;
         }

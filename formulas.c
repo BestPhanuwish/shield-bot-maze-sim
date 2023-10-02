@@ -1,4 +1,5 @@
 #include "formulas.h"
+#include "stdio.h"
 
 int checkOverlap( int object1X, int object1width,
                     int object1Y, int object1height,
@@ -16,7 +17,6 @@ int checkOverlap( int object1X, int object1width,
                 || ((min1st <= min2nd) && (min2nd <= max1st))
                 || ((min2nd <= min1st) && (min1st <= max2nd))
                 || ((min1st <= max2nd) && (max2nd <= max1st));
-
 
     min1st = object1Y;
     max1st = object1Y+object1height;
