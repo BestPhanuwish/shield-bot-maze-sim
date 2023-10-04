@@ -328,20 +328,36 @@ void robotMotorMove(struct Robot * robot, int crashed) {
 
 void robotAutoMotorMove(struct Robot * robot, int front_centre_sensor, int left_sensor, int right_sensor) {
 
-    if (front_centre_sensor == 0) {
-        if (robot->currentSpeed<2)
-            robot->direction = UP;
-    }
-    else if ((robot->currentSpeed>0) && ((front_centre_sensor >= 1) && (left_sensor == 0) && (right_sensor == 0)) ) {
-        robot->direction = DOWN;
-    }
-    else if ((robot->currentSpeed==0) && ((front_centre_sensor >= 1) && (left_sensor == 0)) ) {
+    // finish the turn first
+    printf("%d\n", left_sensor);
+    if (robot_prev_direction == LEFT && front_centre_sensor > 0) {
         robot->direction = LEFT;
+        return;
     }
-    else if ((robot->currentSpeed>0) && ((right_sensor >= 1)) ) {
-        robot->direction = LEFT;
-    }
-    else if ((robot->currentSpeed>0) && ((left_sensor >= 1)) ) {
+    if (robot_prev_direction == RIGHT && front_centre_sensor > 0 && left_sensor != 1) {
         robot->direction = RIGHT;
+        return;
     }
+    
+    // if nothing just go
+    if (robot->currentSpeed<4)
+        robot->direction = UP;
+
+    // left and right check
+    if (left_sensor == 0) {
+        if (robot->currentSpeed>0) {
+            robot->direction = DOWN;
+        } else {
+            robot->direction = LEFT;
+        }
+    }
+    if (right_sensor == 0) {
+        if (robot->currentSpeed>0) {
+            robot->direction = DOWN;
+        } else {
+            robot->direction = RIGHT;
+        }
+    }
+
+    robot_prev_direction = robot->direction;
 }
