@@ -3,7 +3,7 @@
 void setup_robot(struct Robot *robot){
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
     robot->y = OVERALL_WINDOW_HEIGHT-50;
-    robot->true_x = 210;
+    robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
     robot->true_y = OVERALL_WINDOW_HEIGHT-50;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
@@ -326,13 +326,13 @@ void robotMotorMove(struct Robot * robot, int crashed) {
     robot->y = (int) y_offset;
 }
 
+int robot_prev_direction = 0;
+
 void robotAutoMotorMove(struct Robot * robot, int front_centre_sensor, int left_sensor, int right_sensor) {
 
-    // finish the turn first
-    printf("%d\n", left_sensor);
-    if (robot_prev_direction == LEFT && front_centre_sensor > 0) {
-        robot->direction = LEFT;
-        return;
+    if (front_centre_sensor == 0) {
+        if (robot->currentSpeed<2)
+            robot->direction = UP;
     }
     if (robot_prev_direction == RIGHT && front_centre_sensor > 0 && left_sensor != 1) {
         robot->direction = RIGHT;
@@ -351,13 +351,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_centre_sensor, int left_
             robot->direction = LEFT;
         }
     }
-    if (right_sensor == 0) {
-        if (robot->currentSpeed>0) {
-            robot->direction = DOWN;
-        } else {
-            robot->direction = RIGHT;
-        }
+    else if ((robot->currentSpeed>0) && ((left_sensor >= 1)) ) {
+        robot->direction = RIGHT;
     }
-
-    robot_prev_direction = robot->direction;
 }

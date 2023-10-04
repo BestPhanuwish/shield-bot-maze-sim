@@ -10,12 +10,12 @@
 #define OVERALL_WINDOW_HEIGHT 480
 
 #define ROBOT_WIDTH 21
-#define ROBOT_HEIGHT 35
+#define ROBOT_HEIGHT 31 // prev 35
 
 #define BLOCK_SIZE 14
 
 #define WALL_WIDTH 3
-#define WALL_HEIGHT 60
+#define WALL_HEIGHT 45 // prev 39
 
 #define DEFAULT_ANGLE_CHANGE 50
 #define DEFAULT_SPEED_CHANGE 1
